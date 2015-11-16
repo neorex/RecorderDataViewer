@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RecorderDataViewer", "RecorderDataViewer\RecorderDataViewer.csproj", "{F3107886-93C5-42D4-B4F6-830780A504F1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExcelControl", "ExcelControl\ExcelControl.csproj", "{8325CBEF-FA04-41C6-9BF3-B9C85B7587AC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F3107886-93C5-42D4-B4F6-830780A504F1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F3107886-93C5-42D4-B4F6-830780A504F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F3107886-93C5-42D4-B4F6-830780A504F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F3107886-93C5-42D4-B4F6-830780A504F1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8325CBEF-FA04-41C6-9BF3-B9C85B7587AC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8325CBEF-FA04-41C6-9BF3-B9C85B7587AC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8325CBEF-FA04-41C6-9BF3-B9C85B7587AC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8325CBEF-FA04-41C6-9BF3-B9C85B7587AC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
