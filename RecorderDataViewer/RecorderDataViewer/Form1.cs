@@ -20,6 +20,7 @@ namespace RecorderDataViewer
     }
     public partial class frmMain : Form
     {
+        SubConfig _Config = new SubConfig();
         string[] dataColumnHeader = new string[] { "Time", "CH1", "CH2", "CH3", "CH4", "CH5", "CH6", "CH7", "CH8", "CH9", "CH10", "Alarm1", "AlarmOut" };
         ExcelControl.ExcelControl _excelControl = new ExcelControl.ExcelControl();
         DataSet ds = new DataSet();
@@ -31,13 +32,37 @@ namespace RecorderDataViewer
         List<double> _listData = new List<double>();
         Dictionary<DateTime, Data> _dicData = new Dictionary<DateTime, Data>();
         List<Data> _listDatas = new List<Data>();
-        List<Data> _listHigh = new List<Data>();
-        List<Data> _listLow = new List<Data>();
+        List<Data> _listCH1 = new List<Data>();
+        List<Data> _listCH2 = new List<Data>();
+        List<Data> _listCH3 = new List<Data>();
+        List<Data> _listCH4= new List<Data>();
+        List<Data> _listCH5 = new List<Data>();
+        List<Data> _listCH6 = new List<Data>();
+        List<Data> _listCH7 = new List<Data>();
+        List<Data> _listCH8 = new List<Data>();
+        List<Data> _listCH9 = new List<Data>();
+        List<Data> _listCH10 = new List<Data>();
+        List<Data> _listCH11 = new List<Data>();
+        List<Data> _listCH12 = new List<Data>();
+        List<List<Data>> _listCH = new List<List<Data>>();
         //List<DateTime> _listHigh = new List<DateTime>();
         //List<DateTime> _listLow = new List<DateTime>();
         public frmMain()
         {
             InitializeComponent();
+            _listCH.Add(_listCH1);
+            _listCH.Add(_listCH2);
+            _listCH.Add(_listCH3);
+            _listCH.Add(_listCH4);
+            _listCH.Add(_listCH5);
+            _listCH.Add(_listCH6);
+            _listCH.Add(_listCH7);
+            _listCH.Add(_listCH8);
+            _listCH.Add(_listCH9);
+            _listCH.Add(_listCH10);
+            _listCH.Add(_listCH11);
+            _listCH.Add(_listCH12);
+
         }
         #region Parser
         private void parseData(byte[] data, ref List<double> listOutput, bool isBigEndian)
@@ -53,7 +78,8 @@ namespace RecorderDataViewer
                     Array.Reverse(buffer);
                 }
                 short output = BitConverter.ToInt16(buffer, 0);
-                double volt = ConvertToVolt(output, 0, 8192, 0, 20);
+                double volt = ConvertToVolt(output, 
+                    Properties.Settings.Default.ResolutionMin, Properties.Settings.Default.ResolutionMax, Properties.Settings.Default.RealValueMin, Properties.Settings.Default.RealValueMax);
                 listOutput.Add(volt);
                 //Console.WriteLine(volt);
             }
@@ -124,8 +150,8 @@ namespace RecorderDataViewer
                 List<DataTable> listDataTable = new List<DataTable>();
 
                 listDataTable.Add(SetDataTable<Data>(_listDatas, "MeasureData", dataColumnHeader));
-                listDataTable.Add(SetDataTable<Data>(_listHigh, "EdgeHigh", dataColumnHeader));
-                listDataTable.Add(SetDataTable<Data>(_listLow, "EdgeLow", dataColumnHeader));
+                listDataTable.Add(SetDataTable<Data>(_listCH1, "EdgeHigh", dataColumnHeader));
+                listDataTable.Add(SetDataTable<Data>(_listCH2, "EdgeLow", dataColumnHeader));
                 //listDataTable.Add(SetDataTable<DateTime>(_listHigh, "EdgeHigh", new string[] { "Time" }));
                 //listDataTable.Add(SetDataTable<DateTime>(_listLow, "EdgeLow", new string[] { "Time" }));
 
@@ -238,16 +264,65 @@ namespace RecorderDataViewer
                     _listDatas.Add(new Data(time, buffer));
                     if (i > 0)
                     {
-                        EDGE edge = CheckEdge(_dicData.Values.ElementAt(i - 1).CH1, _dicData.Values.ElementAt(i).CH1, Convert.ToDouble(upDownThreshold.Value));
+                        EDGE edge = CheckEdge(Math.Abs(_dicData.Values.ElementAt(i - 1).CH1), Math.Abs(_dicData.Values.ElementAt(i).CH1), Convert.ToDouble(upDownThreshold.Value));
                         if (edge == EDGE.HIGH)
                         {
-                            //_listHigh.Add(_dicData.Keys.ElementAt(i));
-                            _listHigh.Add(new Data(time, buffer));
+                            _listCH1.Add(new Data(time, buffer));
                         }
-                        else if (edge == EDGE.LOW)
+                        edge = CheckEdge(Math.Abs(_dicData.Values.ElementAt(i - 1).CH2), Math.Abs(_dicData.Values.ElementAt(i).CH2), Convert.ToDouble(upDownThreshold.Value));
+                        if (edge == EDGE.HIGH)
                         {
-                            _listLow.Add(new Data(time, buffer));
-                            //_listLow.Add(_dicData.Keys.ElementAt(i));
+                            _listCH2.Add(new Data(time, buffer));
+                        }
+                        edge = CheckEdge(Math.Abs(_dicData.Values.ElementAt(i - 1).CH3), Math.Abs(_dicData.Values.ElementAt(i).CH3), Convert.ToDouble(upDownThreshold.Value));
+                        if (edge == EDGE.HIGH)
+                        {
+                            _listCH3.Add(new Data(time, buffer));
+                        }
+                        edge = CheckEdge(Math.Abs(_dicData.Values.ElementAt(i - 1).CH4), Math.Abs(_dicData.Values.ElementAt(i).CH4), Convert.ToDouble(upDownThreshold.Value));
+                        if (edge == EDGE.HIGH)
+                        {
+                            _listCH4.Add(new Data(time, buffer));
+                        }
+                        edge = CheckEdge(Math.Abs(_dicData.Values.ElementAt(i - 1).CH5), Math.Abs(_dicData.Values.ElementAt(i).CH5), Convert.ToDouble(upDownThreshold.Value));
+                        if (edge == EDGE.HIGH)
+                        {
+                            _listCH5.Add(new Data(time, buffer));
+                        }
+                        edge = CheckEdge(Math.Abs(_dicData.Values.ElementAt(i - 1).CH6), Math.Abs(_dicData.Values.ElementAt(i).CH6), Convert.ToDouble(upDownThreshold.Value));
+                        if (edge == EDGE.HIGH)
+                        {
+                            _listCH6.Add(new Data(time, buffer));
+                        }
+                        edge = CheckEdge(Math.Abs(_dicData.Values.ElementAt(i - 1).CH7), Math.Abs(_dicData.Values.ElementAt(i).CH7), Convert.ToDouble(upDownThreshold.Value));
+                        if (edge == EDGE.HIGH)
+                        {
+                            _listCH7.Add(new Data(time, buffer));
+                        }
+                        edge = CheckEdge(Math.Abs(_dicData.Values.ElementAt(i - 1).CH8), Math.Abs(_dicData.Values.ElementAt(i).CH8), Convert.ToDouble(upDownThreshold.Value));
+                        if (edge == EDGE.HIGH)
+                        {
+                            _listCH8.Add(new Data(time, buffer));
+                        }
+                        edge = CheckEdge(Math.Abs(_dicData.Values.ElementAt(i - 1).CH9), Math.Abs(_dicData.Values.ElementAt(i).CH9), Convert.ToDouble(upDownThreshold.Value));
+                        if (edge == EDGE.HIGH)
+                        {
+                            _listCH9.Add(new Data(time, buffer));
+                        }
+                        edge = CheckEdge(Math.Abs(_dicData.Values.ElementAt(i - 1).CH10), Math.Abs(_dicData.Values.ElementAt(i).CH10), Convert.ToDouble(upDownThreshold.Value));
+                        if (edge == EDGE.HIGH)
+                        {
+                            _listCH10.Add(new Data(time, buffer));
+                        }
+                        edge = CheckEdge(Math.Abs(_dicData.Values.ElementAt(i - 1).Alarm1), Math.Abs(_dicData.Values.ElementAt(i).Alarm1), Convert.ToDouble(upDownThreshold.Value));
+                        if (edge == EDGE.HIGH)
+                        {
+                            _listCH11.Add(new Data(time, buffer));
+                        }
+                        edge = CheckEdge(Math.Abs(_dicData.Values.ElementAt(i - 1).AlarmOut), Math.Abs(_dicData.Values.ElementAt(i).AlarmOut), Convert.ToDouble(upDownThreshold.Value));
+                        if (edge == EDGE.HIGH)
+                        {
+                            _listCH12.Add(new Data(time, buffer));
                         }
                     }
                 }
@@ -282,29 +357,31 @@ namespace RecorderDataViewer
 
             return fileName;
         }
-        private double ConvertToVolt(short input, int resolutionMin, int resolutionMax, int outputMin, int outputMax)
+        private double ConvertToVolt(short input, int resolutionMin, int resolutionMax, double outputMin, double outputMax)
         {
             double volt = 0.0;
-            double resolution = input - resolutionMin;
-            resolution /= (resolutionMax - resolutionMin);
-
-            volt = resolution;
-            volt *= (outputMax - outputMin);
-
+            volt = input - resolutionMin;
+            volt /= resolutionMax - resolutionMin;
+            volt *= outputMax - outputMin;
+            volt += outputMin;
             return volt;
         }
         private void ClearData()
         {
             _timeStart=DateTime.Now;
-            _samplingInterval=100;
-            _headerSize=8192;
+            _samplingInterval=Properties.Settings.Default.SamplingInterval;
+            _headerSize=Properties.Settings.Default.HeaderSize;
 
             _listData.Clear();
             _dicData.Clear();
 
             _listDatas.Clear();
-            _listHigh.Clear();
-            _listLow.Clear();
+            //_listCH1.Clear();
+            //_listCH2.Clear();
+            foreach (var item in _listCH)
+            {
+                item.Clear();
+            }
         }
         private EDGE CheckEdge(double p1, double p2, double threshold)
         {
@@ -348,14 +425,22 @@ namespace RecorderDataViewer
             sb.AppendFormat("종료 시간: {0:yyyy-MM-dd HH:mm:ss.fff}\r\n", to);
             sb.AppendFormat("모니터링 시간: {0}\r\n", to - from);
 
-            sb.AppendFormat("High Edge Count : {0}\r\n", _listHigh.Count);
+            //sb.AppendFormat("CH1 Edge Count : {0}\r\n", _listCH1.Count);
 
-            sb.AppendFormat("Low Edge Count : {0}\r\n", _listLow.Count);
-
+            //sb.AppendFormat("CH2 Edge Count : {0}\r\n", _listCH2.Count);
+            int chCount = 1;
+            foreach (var item in _listCH)
+            {
+                if (item.Count>0)
+                {
+                    sb.AppendFormat("CH{0} Edge Count : {1}\r\n", chCount,item.Count);
+                    chCount++;
+                }
+            }
 
             textBox1.Text += sb;
-
-            ucGraph.AddData(_dicData, _listHigh, _listLow);
+            
+            ucGraph.AddData(_dicData, _listCH1, _listCH2);
 
             this.Refresh();
             this.ResumeLayout(false);
@@ -379,13 +464,6 @@ namespace RecorderDataViewer
                     {
                         string fileName = sfd.FileName;
                         MakeDataSet();
-                        //Task.Run(async () => await _excelControl.ExportToFile(fileName, ds));
-                        //_excelControl.ExportToFile(fileName, ds);
-                        //_excelControl.CreateSpreadsheetWorkbook(fileName, ds);
-                        //_excelControl.AddWorkbook(fileName,ds);
-                        //_excelControl.exportDocument(fileName, ds);
-                        //Task.Run(async () => await _excelControl.ExportToFile("export.xlsx"));
-                        //Task.Run(async () => await _excelControl.exportDocumentXMLwriter(fileName, ds));
 
                         //new
                         _excelControl.ExportDSToExcel(ds, fileName);
@@ -401,9 +479,20 @@ namespace RecorderDataViewer
             textBox1.Text += string.Format("Export to excel completed. {0:g}", sw.Elapsed);
 
         }
+
         #endregion
 
-
+        private void btnConfig_Click(object sender, EventArgs e)
+        {
+            if (_Config.CanFocus)
+            {
+                _Config.Activate();
+            }
+            else
+            {
+                _Config.Show();
+            }
+        }
     }
 }
                                                                                   

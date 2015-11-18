@@ -13,8 +13,23 @@ namespace RecorderDataViewer
 {
     public partial class UcGraph : UserControl
     {
+
         //ZedGraph.Chart chart = new ZedGraph.Chart();
         ZedGraphControl zedChart = new ZedGraphControl();
+
+        GraphPane myPane;
+        PointPairList listCH1 = new PointPairList();
+        PointPairList listCH2 = new PointPairList();
+        PointPairList listCH3 = new PointPairList();
+        PointPairList listCH4 = new PointPairList();
+        PointPairList listCH5 = new PointPairList();
+        PointPairList listCH6 = new PointPairList();
+        PointPairList listCH7 = new PointPairList();
+        PointPairList listCH8 = new PointPairList();
+        PointPairList listCH9 = new PointPairList();
+        PointPairList listCH10 = new PointPairList();
+        PointPairList listAlarm1 = new PointPairList();
+        PointPairList listAlarmOut = new PointPairList();
         public UcGraph()
         {
             InitializeComponent();
@@ -27,6 +42,7 @@ namespace RecorderDataViewer
             //panel.Controls.Add(chart);
             CreateGraph(zedChart);
             panel.Controls.Add(zedChart);
+            myPane = zedChart.GraphPane;
         }
         // Build the Chart
         private void CreateGraph(ZedGraphControl zgc)
@@ -121,27 +137,70 @@ namespace RecorderDataViewer
             zg1.ZoomStepFraction = 0.1;
 
         }
-
+        public void InitData()
+        {
+            GraphPane myPane = zedChart.GraphPane;
+            myPane.CurveList.Clear();
+            List<PointPairList> pointList = new List<PointPairList>();
+            for (int i = 0; i < 12; i++)
+            {
+                pointList.Add(new PointPairList());
+            }
+            listCH1 = new PointPairList();
+            listCH2 = new PointPairList();
+            listCH3 = new PointPairList();
+            listCH4 = new PointPairList();
+            listCH5 = new PointPairList();
+            listCH6 = new PointPairList();
+            listCH7 = new PointPairList();
+            listCH8 = new PointPairList();
+            listCH9 = new PointPairList();
+            listCH10 = new PointPairList();
+            listAlarm1 = new PointPairList();
+            listAlarmOut = new PointPairList();
+        }
         //public void AddData(Dictionary<DateTime,Data> dicData,List<DateTime> listHigh,List<DateTime> listLow)
         public void AddData(Dictionary<DateTime, Data> dicData, List<Data> listHigh, List<Data> listLow)
         {
             try
             {
-                GraphPane myPane = zedChart.GraphPane;
-                myPane.CurveList.Clear();
-                PointPairList listCH1 = new PointPairList();
+                InitData();
                 foreach (var item in dicData)
                 {
                     double x = (double)new XDate(item.Key);
                     listCH1.Add(x, item.Value.CH1);
+                    listCH2.Add(x, item.Value.CH2);
+                    listCH3.Add(x, item.Value.CH3);
+                    listCH4.Add(x, item.Value.CH4);
+                    listCH5.Add(x, item.Value.CH5);
+                    listCH6.Add(x, item.Value.CH6);
+                    listCH7.Add(x, item.Value.CH7);
+                    listCH8.Add(x, item.Value.CH8);
+                    listCH9.Add(x, item.Value.CH9);
+                    listCH10.Add(x, item.Value.CH10);
+                    listAlarm1.Add(x, item.Value.Alarm1);
+                    listAlarmOut.Add(x, item.Value.AlarmOut);
                 }
-                LineItem myCurve2 = myPane.AddCurve("CH1", listCH1, Color.Blue, SymbolType.None);
+                myPane.CurveList.Clear();
+                LineItem myCurve1 = myPane.AddCurve("CH1 ", listCH1, Properties.Settings.Default.LineColorCH1, SymbolType.None);
+                LineItem myCurve2 = myPane.AddCurve("CH2 ", listCH2, Properties.Settings.Default.LineColorCH2, SymbolType.None);
+                LineItem myCurve3 = myPane.AddCurve("CH3 ", listCH3, Properties.Settings.Default.LineColorCH3, SymbolType.None);
+                LineItem myCurve4 = myPane.AddCurve("CH4 ", listCH4, Properties.Settings.Default.LineColorCH4, SymbolType.None);
+                LineItem myCurve5 = myPane.AddCurve("CH5 ", listCH5, Properties.Settings.Default.LineColorCH5, SymbolType.None);
+                LineItem myCurve6 = myPane.AddCurve("CH6 ", listCH6, Properties.Settings.Default.LineColorCH6, SymbolType.None);
+                LineItem myCurve7 = myPane.AddCurve("CH7 ", listCH7, Properties.Settings.Default.LineColorCH7, SymbolType.None);
+                LineItem myCurve8 = myPane.AddCurve("CH8 ", listCH8, Properties.Settings.Default.LineColorCH8, SymbolType.None);
+                LineItem myCurve9 = myPane.AddCurve("CH9 ", listCH9, Properties.Settings.Default.LineColorCH9, SymbolType.None);
+                LineItem myCurve10 = myPane.AddCurve("CH10", listCH10, Properties.Settings.Default.LineColorCH10, SymbolType.None);
+                LineItem myCurve11 = myPane.AddCurve("Alarm1", listAlarm1, Properties.Settings.Default.LineColorCH11, SymbolType.None);
+                LineItem myCurve12 = myPane.AddCurve("AlarmOut", listAlarmOut, Properties.Settings.Default.LineColorCH12, SymbolType.None);
+
                 zedChart.AxisChange();
                 this.Refresh();
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message+Environment.NewLine+ex.StackTrace);
+                Console.WriteLine(ex.Message + Environment.NewLine + ex.StackTrace);
             }
         }
         public void Clear()

@@ -38,6 +38,7 @@
             this.btnExportToExcel = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.ucGraph = new RecorderDataViewer.UcGraph();
+            this.btnConfig = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.upDownThreshold)).BeginInit();
             this.tlpMain.SuspendLayout();
             this.flpMenu.SuspendLayout();
@@ -118,6 +119,7 @@
             this.flpMenu.Controls.Add(this.btnExportToExcel);
             this.flpMenu.Controls.Add(this.label1);
             this.flpMenu.Controls.Add(this.upDownThreshold);
+            this.flpMenu.Controls.Add(this.btnConfig);
             this.flpMenu.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flpMenu.Location = new System.Drawing.Point(3, 511);
             this.flpMenu.Name = "flpMenu";
@@ -157,6 +159,19 @@
             this.ucGraph.Size = new System.Drawing.Size(1141, 248);
             this.ucGraph.TabIndex = 2;
             // 
+            // btnConfig
+            // 
+            this.btnConfig.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.btnConfig.AutoSize = true;
+            this.btnConfig.Font = new System.Drawing.Font("Verdana", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnConfig.Location = new System.Drawing.Point(503, 3);
+            this.btnConfig.Name = "btnConfig";
+            this.btnConfig.Size = new System.Drawing.Size(141, 28);
+            this.btnConfig.TabIndex = 0;
+            this.btnConfig.Text = "Config";
+            this.btnConfig.UseVisualStyleBackColor = true;
+            this.btnConfig.Click += new System.EventHandler(this.btnConfig_Click);
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
@@ -186,6 +201,7 @@
         private UcGraph ucGraph;
         private System.Windows.Forms.Button btnExportToExcel;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button btnConfig;
     }
 }
 

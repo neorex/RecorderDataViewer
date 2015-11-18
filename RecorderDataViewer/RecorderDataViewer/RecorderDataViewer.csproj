@@ -32,6 +32,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>KimsLogo.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -58,6 +61,12 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SubConfig.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SubConfig.Designer.cs">
+      <DependentUpon>SubConfig.cs</DependentUpon>
+    </Compile>
     <Compile Include="UcGraph.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -76,6 +85,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="SubConfig.resx">
+      <DependentUpon>SubConfig.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UcGraph.resx">
       <DependentUpon>UcGraph.cs</DependentUpon>
     </EmbeddedResource>
@@ -97,6 +109,9 @@
       <Project>{8325cbef-fa04-41c6-9bf3-b9c85b7587ac}</Project>
       <Name>ExcelControl</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="KimsLogo.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
